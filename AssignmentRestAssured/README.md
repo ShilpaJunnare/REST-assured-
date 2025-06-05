@@ -1,83 +1,136 @@
-# Bookstore API
-
-## Overview
-
+📚 Bookstore API
+Overview
 This project is a simple Bookstore API built with FastAPI. It allows users to manage books and perform user authentication, including sign-up and login functionalities. The API uses JWT tokens for securing endpoints related to book management.
 
-## Features
+Features
+Book Management: Create, update, delete, and retrieve books.
 
-- **Book Management**: Users can create, update, delete, and retrieve books.
-- **User Authentication**: Includes user sign-up and login functionalities.
-- **Secure Endpoints**: Uses JWT tokens to secure book management endpoints.
+User Authentication: Includes user sign-up and login.
 
-## Technologies
+Secure Endpoints: Uses JWT for secure access.
 
-- **FastAPI**: A modern, fast (high-performance) web framework for building APIs with Python 3.7+.
-- **SQLAlchemy**: SQL toolkit and Object-Relational Mapping (ORM) library for Python.
-- **Passlib**: Comprehensive password hashing library for Python.
-- **JWT**: JSON Web Tokens for securely transmitting information between parties.
+Technologies
+FastAPI
 
-## Getting Started
+This project demonstrates REST API testing using **REST-assured**, **TestNG**, and **Maven**.
 
-### Prerequisites
+---
 
-- Python 3.7+
-- pip
+## 📁 Project Structure
+AssignmentRestAssured/
+├── src/
+│ └── test/
+│ └── java/
+│ └── ... (Test Classes)
+├── pom.xml
+├── .github/
+│ └── workflows/
+│ └── ci.yml
+└── README.md
 
-### Installation
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/sanjay-dandekar-jktech/git
-    ```
+---
 
-2. Navigate to the project directory:
+## 🧪 How to Run Tests
 
-    ```bash
-    cd bookstore
-    ```
+Before running the tests, make sure you have:
 
-3. Install the required packages:
+- Java 11 or later installed  
+- Apache Maven installed and configured  
+- Internet connection to download Maven dependencies
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+Run your tests using:
 
-### Running the Application
+```bash
+mvn clean test
 
-1. Start the FastAPI server:
 
-    ```bash
-    uvicorn main:app --reload
-    ```
+📊 Allure Reporting
 
-2. The API will be available at `http://127.0.0.1:8000`
+✅ Step 1: Install Allure CLI
 
-### API Endpoints
+choco install allure
 
-- Book Management
+✅ Step 2: Run Tests & Generate Allure Report
 
-    - POST /books/: Create a new book.
-    - PUT /books/{book_id}: Update a book by ID.
-    - DELETE /books/{book_id}: Delete a book by ID.
-    - GET /books/{book_id}: Get a book by ID.
-    - GET /books/: Get all books.
+# Run tests and generate results
+mvn clean test
 
-- User Authentication
+# Generate HTML report
+allure generate target/allure-results --clean -o target/allure-report
 
-    - POST /signup: Sign up a new user.
-    - POST /login: Log in and receive an access token.
+# Open the report in your default browser
+allure serve target/allure-results
 
-- Health Check
-    - GET /health: Check the health of the API.
 
-### Running using Docker
+✅ Allure Configuration
+<dependency>
+    <groupId>io.qameta.allure</groupId>
+    <artifactId>allure-testng</artifactId>
+    <version>2.13.9</version>
+</dependency>
 
-- Use the following command to bring up the bookstore API container
+Add this plugin in your pom.xml:
+<plugin>
+    <groupId>io.qameta.allure</groupId>
+    <artifactId>allure-maven</artifactId>
+    <version>2.10.0</version>
+</plugin>
 
-  ```bash
-  docker compose up --build -d bookstore
-  ```
+🔁 GitHub Actions - CI/CD
+.github/workflows/ci.yml
 
-### License
-    This project is licensed under the MIT License - see the LICENSE file for details
+
+🛠 Workflow Configuration
+
+name: REST-assured CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+
+    - name: Build and Test
+      run: mvn clean test
+
+    - name: Generate Allure Report
+      run: mvn io.qameta.allure:allure-maven:report
+
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: allure-report
+        path: target/site/allure-maven-plugin
+
+🔧 Technologies Used
+
+Java 11
+
+Maven
+
+REST-assured
+
+TestNG
+
+Allure Reporting
+
+GitHub Actions for CI
+
+📄 License
+This project is licensed for educational/demo purpose
+
