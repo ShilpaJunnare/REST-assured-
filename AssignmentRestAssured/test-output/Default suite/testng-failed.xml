@@ -3,11 +3,12 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="tests.PutPatchDeleteExample">
+      <class name="tests.BookstoreAdditionalScenarios">
         <methods>
-          <include name="testDelete"/>
+          <include name="testGetBookByInvalidId"/>
+          <include name="signupAndLogin"/>
         </methods>
-      </class> <!-- tests.PutPatchDeleteExample -->
+      </class> <!-- tests.BookstoreAdditionalScenarios -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
